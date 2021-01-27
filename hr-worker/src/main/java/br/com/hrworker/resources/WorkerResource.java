@@ -1,6 +1,7 @@
-package br.com.hrworker.repositories;
+package br.com.hrworker.resources;
 
 import br.com.hrworker.entities.Worker;
+import br.com.hrworker.repositories.WorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
