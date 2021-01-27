@@ -1,7 +1,5 @@
 package br.com.hrworker.entities;
 
-import org.hibernate.jdbc.Work;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,14 +15,13 @@ public class Worker {
   private Double dailyIncome;
 
   @Deprecated
-  public Worker() {};
+  public Worker() {}
 
   public Worker(Long id, String name, Double dailyIncome) {
     this.id = id;
     this.name = name;
     this.dailyIncome = dailyIncome;
   }
-
 
   public Long getId() {
     return id;

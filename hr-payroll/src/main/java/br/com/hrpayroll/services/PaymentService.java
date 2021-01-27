@@ -2,33 +2,28 @@ package br.com.hrpayroll.services;
 
 import br.com.hrpayroll.entities.Payment;
 import br.com.hrpayroll.entities.Worker;
+import br.com.hrpayroll.feignclients.WorkerFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class PaymentService {
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Value("${hr-worker.host}")
-    private String workerHost;
+    private WorkerFeignClient workerFeignClient;
 
 
     public Payment getPayment(Long workerId, int days) {
-        Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("id", workerId.toString());
-        Worker worker = restTemplate.getForObject(workerHost + "workers/{id}", Worker.class, uriVariables);
-        if (worker == null) {
+
+        ResponseEntity<Worker> workerResponse = workerFeignClient.findById(workerId);
+
+        if (!workerResponse.getStatusCode().is2xxSuccessful()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        Worker worker = workerResponse.getBody();
         return new Payment(worker.getName(), worker.getDailyIncome(), days);
     }
 }
