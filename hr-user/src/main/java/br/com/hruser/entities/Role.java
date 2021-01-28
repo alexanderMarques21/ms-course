@@ -31,5 +31,13 @@ public class Role {
     public int hashCode() {
         return Objects.hash(roleName);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
 }
 
