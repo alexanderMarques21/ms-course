@@ -25,11 +25,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String name, String email, String password) {
+    public User(Long id, String name, String email, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
 
@@ -39,7 +40,6 @@ public class User implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .collect(Collectors.toList());
     }
-
     @Override
     public String getUsername() {
         return email;
