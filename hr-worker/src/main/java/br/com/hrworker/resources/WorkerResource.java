@@ -21,9 +21,6 @@ import java.util.Optional;
 @RequestMapping("/workers")
 public class WorkerResource {
 
-  @Value("${test.config}")
-  private String testConfig;
-
   @Autowired private WorkerRepository workerRepository;
 
   @Autowired private Environment environment;
@@ -47,8 +44,4 @@ public class WorkerResource {
     return ResponseEntity.ok().body(optionalWorker.get());
   }
 
-  @GetMapping("/configs")
-  public void getConfigs() {
-    LOGGER.info("Test config = {}", testConfig);
-  }
 }
